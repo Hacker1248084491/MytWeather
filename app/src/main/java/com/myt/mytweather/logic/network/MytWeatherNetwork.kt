@@ -11,6 +11,7 @@ object MytWeatherNetwork {
 
     //创建网络访问动态代理对象
     private val placeService = ServiceCreator.create<PlaceService>()
+    private val weatherService = ServiceCreator.create(WeatherService::class.java)
 
     //统一封装数据返回回调
     private suspend fun <T> Call<T>.await(): T{
@@ -33,5 +34,9 @@ object MytWeatherNetwork {
      */
 
     suspend fun searchPlaces(query: String) = placeService.searchPlaces(query).await()
+
+    suspend fun getDailyWeather(lng: String, lat: String) = weatherService.getDailyWeather(lng, lat).await()
+
+    suspend fun getRealtimeWeather(lng: String, lat: String) = weatherService.getRealtimeWeather(lng, lat).await()
 
 }
